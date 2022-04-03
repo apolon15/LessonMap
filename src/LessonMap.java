@@ -68,9 +68,9 @@ public class LessonMap {
         }
     }
 
-/*
-метод реализации статистики.НЕ РАБОТАЕТ КАК Я ХОТЕЛ.Ищу другой спооб
- */
+    /*
+    метод реализации статистики.НЕ РАБОТАЕТ КАК Я ХОТЕЛ.Ищу другой спооб
+     */
     private static int popWord(String userWord) {
         int cnt = 0;
         if (popular.containsValue(userWord)) {
@@ -92,9 +92,9 @@ public class LessonMap {
         return cnt;
     }
 
-/*
-замена анг.слова(ключа)
- */
+    /*
+    замена анг.слова(ключа)
+     */
     private static void reKey() throws IOException {
         System.out.println("Введи слово(англ) :");
         String userWord = br.readLine();
@@ -106,9 +106,10 @@ public class LessonMap {
             System.out.println(newWord + "-" + translator.get(newWord));
         }
     }
-/*
-функция испарвления, замещения
- */
+
+    /*
+    функция испарвления, замещения
+     */
     private static void re() throws IOException {
         System.out.println("Введи слово(англ) :");
         String userWord = br.readLine();
@@ -130,9 +131,10 @@ public class LessonMap {
             }
         }
     }
-/*
-удаление "слово-перевода"
- */
+
+    /*
+    удаление "слово-перевода"
+     */
     private static void delete() throws IOException {
         System.out.println("Введи слово(англ) :");
         String userWord = br.readLine();
@@ -181,9 +183,10 @@ public class LessonMap {
         }
 
     }
-/*
-функция перевода
- */
+
+    /*
+    функция перевода
+     */
     private static int rusToEngl() throws IOException {
         int count = -1;
         System.out.println("Введи слово(англ) :");
@@ -197,26 +200,26 @@ public class LessonMap {
         return count;
     }
 
-/*
-меню для выбора пункта
- */
+    /*
+    меню для выбора пункта
+     */
     private static int showMenu() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Выбери действие: \n1-перевод англ-русский" +
                 "\n2-исправить перевод\n3-удалить\\добавить \n4-заменить англ.ориг. слово\n5-увидеть статистику запросов\n6-выйти из программы");
         return Integer.parseInt(br.readLine());
     }
-/*
-создание своего словаря
- */
+
+    /*
+    создание своего словаря
+     */
     private static void init2() throws IOException {
-        String resume = " ";
-        System.out.println("Создадим словарь");
+         System.out.println("Создадим словарь");
         do {
             System.out.println("Введи слово :");
             String word = br.readLine();
             ArrayList<String> wordNew = new ArrayList<>();
-            System.out.println("Введи перевод :");
+            System.out.println("Введи перевод.Если слов несколько, разделяй их пробелами:");
             String translat = br.readLine();
             String[] wordMass = translat.split(" ");
             wordNew.addAll(Arrays.asList(wordMass));
