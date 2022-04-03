@@ -68,7 +68,9 @@ public class LessonMap {
         }
     }
 
-
+/*
+метод реализации статистики.НЕ РАБОТАЕТ КАК Я ХОТЕЛ.Ищу другой спооб
+ */
     private static int popWord(String userWord) {
         int cnt = 0;
         if (popular.containsValue(userWord)) {
@@ -90,7 +92,9 @@ public class LessonMap {
         return cnt;
     }
 
-
+/*
+замена анг.слова(ключа)
+ */
     private static void reKey() throws IOException {
         System.out.println("Введи слово(англ) :");
         String userWord = br.readLine();
@@ -102,7 +106,9 @@ public class LessonMap {
             System.out.println(newWord + "-" + translator.get(newWord));
         }
     }
-
+/*
+функция испарвления, замещения
+ */
     private static void re() throws IOException {
         System.out.println("Введи слово(англ) :");
         String userWord = br.readLine();
@@ -124,7 +130,9 @@ public class LessonMap {
             }
         }
     }
-
+/*
+удаление "слово-перевода"
+ */
     private static void delete() throws IOException {
         System.out.println("Введи слово(англ) :");
         String userWord = br.readLine();
@@ -173,7 +181,9 @@ public class LessonMap {
         }
 
     }
-
+/*
+функция перевода
+ */
     private static int rusToEngl() throws IOException {
         int count = -1;
         System.out.println("Введи слово(англ) :");
@@ -187,14 +197,18 @@ public class LessonMap {
         return count;
     }
 
-
+/*
+меню для выбора пункта
+ */
     private static int showMenu() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Выбери действие: \n1-перевод англ-русский" +
                 "\n2-исправить перевод\n3-удалить\\добавить \n4-заменить англ.ориг. слово\n5-увидеть статистику запросов\n6-выйти из программы");
         return Integer.parseInt(br.readLine());
     }
-
+/*
+создание своего словаря
+ */
     private static void init2() throws IOException {
         String resume = " ";
         System.out.println("Создадим словарь");
@@ -212,30 +226,30 @@ public class LessonMap {
 
     }
 
-    private static void init() {
-        System.out.println("В коллекции представлены слова: hello, bye, ok, car, house, fly, phone.");
-        ArrayList<String> hello = new ArrayList<>();
-        hello.addAll(Arrays.asList("привет", "добрый день", "здравстуйте"));
-        translator.put("hello", hello);
-        ArrayList<String> bye = new ArrayList<>();
-        bye.addAll(Arrays.asList("пока", "до связи", "увидимся"));
-        translator.put("bye", bye);
-        ArrayList<String> ok = new ArrayList<>();
-        ok.addAll(Arrays.asList("ok", "отлично", "хорошо"));
-        translator.put("ok", ok);
-        ArrayList<String> car = new ArrayList<>();
-        car.addAll(Arrays.asList("машина", "авто", "автомобиль"));
-        translator.put("car", car);
-        ArrayList<String> house = new ArrayList<>();
-        house.addAll(Arrays.asList("дом", "жильё", "квартира"));
-        translator.put("house", house);
-        ArrayList<String> fly = new ArrayList<>();
-        fly.addAll(Arrays.asList("летать", "парить"));
-        translator.put("fly", fly);
-        ArrayList<String> phone = new ArrayList<>();
-        phone.addAll(Arrays.asList("телефон", "мобила", "смартфон"));
-        translator.put("phone", phone);
-    }
+//    private static void init() {
+//        System.out.println("В коллекции представлены слова: hello, bye, ok, car, house, fly, phone.");
+//        ArrayList<String> hello = new ArrayList<>();
+//        hello.addAll(Arrays.asList("привет", "добрый день", "здравстуйте"));
+//        translator.put("hello", hello);
+//        ArrayList<String> bye = new ArrayList<>();
+//        bye.addAll(Arrays.asList("пока", "до связи", "увидимся"));
+//        translator.put("bye", bye);
+//        ArrayList<String> ok = new ArrayList<>();
+//        ok.addAll(Arrays.asList("ok", "отлично", "хорошо"));
+//        translator.put("ok", ok);
+//        ArrayList<String> car = new ArrayList<>();
+//        car.addAll(Arrays.asList("машина", "авто", "автомобиль"));
+//        translator.put("car", car);
+//        ArrayList<String> house = new ArrayList<>();
+//        house.addAll(Arrays.asList("дом", "жильё", "квартира"));
+//        translator.put("house", house);
+//        ArrayList<String> fly = new ArrayList<>();
+//        fly.addAll(Arrays.asList("летать", "парить"));
+//        translator.put("fly", fly);
+//        ArrayList<String> phone = new ArrayList<>();
+//        phone.addAll(Arrays.asList("телефон", "мобила", "смартфон"));
+//        translator.put("phone", phone);
+//    }
 }
 //        HashMap<String, Integer> testMap = new HashMap();
 //        testMap.put("user1", 111);
