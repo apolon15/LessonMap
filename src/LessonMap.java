@@ -19,31 +19,18 @@ import java.util.*;
 public class LessonMap {
     public static HashMap<String, List<String>> translator = new HashMap();
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    public static
-    TreeMap<Integer, String> popular = new TreeMap();
-    static Set<Map.Entry<Integer, String>> entrySet = popular.entrySet();
-
+    public static TreeMap<String, Integer> popularWords = new TreeMap();
+    static Set<Map.Entry<String, Integer>> entrySet = popularWords.entrySet();
+    static TreeMap<Integer, String> sortWord = new TreeMap<>();
 
     public static void main(String[] args) throws IOException {
         boolean stop = false;
-        int min = 0;
-        int max = 0;
-        int count;
         init2();
         while (!stop) {
             try {
                 switch (showMenu()) {
                     case 1:
-                        count = rusToEngl();
-                        if (count > max) {//сдесь введен count для способа создания статисктики.НЕ ПОЛУЧИЛОСЬ.Думаю дальше...
-                            max = count;
-                        }
-                        if (count < max) {
-                            min = count;
-                        }
-                        if (count == -1) {
-                            System.out.println("Давай еще разок ;) ");
-                        }
+                        rusToEngl();
                         break;
                     case 3:
                         delete();
@@ -59,7 +46,7 @@ public class LessonMap {
                         stop = true;
                         break;
                     case 5:
-                        System.err.println(popular.size() + " колличество использованных слов. Популярное слово -:" + popular.get(max) + "; не популярное -: " + popular.get(min));
+                        popWord();
                         break;
                 }
             } catch (NumberFormatException ex) {
@@ -69,27 +56,14 @@ public class LessonMap {
     }
 
     /*
-    метод реализации статистики.НЕ РАБОТАЕТ КАК Я ХОТЕЛ.Ищу другой спооб
+    метод реализации статистики.
      */
-    private static int popWord(String userWord) {
-        int cnt = 0;
-        if (popular.containsValue(userWord)) {
-            Object O = new Object();//что хотим найти
-            for (Map.Entry<Integer, String> pair : entrySet) {
-                pair.getValue();
-                if (!O.equals(pair.getValue())) {
-                    cnt = pair.getKey();// нашли наше значение и возвращаем  ключ
-                    cnt++;
-                    popular.put(cnt, userWord);
-                    break;
-                }
-            }
+    private static void popWord() {
+        Object O = new Object();//что хотим найти
+        for (Map.Entry<String, Integer> pair : entrySet) {
+            sortWord.put(pair.getValue(), pair.getKey());
         }
-        if (!popular.containsValue(userWord)) {
-            cnt = 1;//установил ключ как первое обращение к слову
-            popular.put(cnt, userWord);
-        }
-        return cnt;
+        System.err.println("Kолличество использованных слов " + popularWords.size() + " . Популярное слово -: " + sortWord.get(sortWord.lastKey()).toUpperCase() + "; не популярное -: " + sortWord.get(sortWord.firstKey()).toUpperCase());
     }
 
     /*
@@ -156,7 +130,7 @@ public class LessonMap {
                     int index = 0;
                     while (it.hasNext()) {
                         if (index == del - 1) {
-                            it.next();
+                            //           it.next();
                             it.remove();
                             remove = true;
                             System.out.println(userWord + "-" + translator.get(userWord.toLowerCase()));
@@ -187,17 +161,22 @@ public class LessonMap {
     /*
     функция перевода
      */
-    private static int rusToEngl() throws IOException {
-        int count = -1;
+    private static TreeMap<String, Integer> rusToEngl() throws IOException {
+        int count = 1;
         System.out.println("Введи слово(англ) :");
         String userWord = br.readLine();
         if (translator.containsKey(userWord.toLowerCase())) {
             System.out.println(userWord + "-" + translator.get(userWord.toLowerCase()));
-            count = popWord(userWord);
+            if (popularWords.get(userWord) != null) {
+                count = popularWords.get(userWord);
+                popularWords.replace(userWord, popularWords.get(userWord), ++count);
+            } else {
+                popularWords.put(userWord, count);
+            }
         } else {
             System.out.println("нет перевода...");
         }
-        return count;
+        return popularWords;
     }
 
     /*
@@ -214,7 +193,7 @@ public class LessonMap {
     создание своего словаря
      */
     private static void init2() throws IOException {
-         System.out.println("Создадим словарь");
+        System.out.println("Создадим словарь");
         do {
             System.out.println("Введи слово :");
             String word = br.readLine();
