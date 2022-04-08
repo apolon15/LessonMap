@@ -66,7 +66,7 @@ public class LessonMap {
                 massWordsCount.add(pair.getValue());
         }
         Collections.sort(massWordsCount);
-        System.err.println("Kолличество использованных слов " + popularWords.size() + ". слова по возрастанию популярности -: ");
+        System.out.println("Kолличество использованных слов " + popularWords.size() + ". слова по возрастанию популярности -: ");
         int tempSize;
         if (massWordsCount.size() < 5) {
             tempSize = massWordsCount.size()-1;
@@ -81,7 +81,7 @@ public class LessonMap {
             }
         }
         Collections.reverse(massWordsCount);
-        System.err.println("Kолличество использованных слов " + popularWords.size() + ". слова по убыванию популярности -: ");
+        System.out.println("Kолличество использованных слов " + popularWords.size() + ". слова по убыванию популярности -: ");
         for (int i = 0; i <= tempSize; i++) {
             for (Map.Entry<String, Integer> pair : entrySet) {
                 if (pair.getValue() == massWordsCount.get(i)) {
