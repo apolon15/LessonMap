@@ -17,15 +17,16 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class LessonMap {
-    public static HashMap<String, List<String>> translator = new HashMap();
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    public static TreeMap<String, Integer> popularWords = new TreeMap();
-    static Set<Map.Entry<String, Integer>> entrySet = popularWords.entrySet();
-    static TreeMap<Integer, String> sortWord = new TreeMap<>();
+
+    public static HashMap<String, List<String>> translator = new HashMap<>();
+    public static Map<String, Integer> popularWords = new HashMap<String, Integer>();
+    public static Set<Map.Entry<String, Integer>> entrySet = popularWords.entrySet();
+
 
     public static void main(String[] args) throws IOException {
         boolean stop = false;
-        init2();
+        init();
         while (!stop) {
             try {
                 switch (showMenu()) {
@@ -59,11 +60,35 @@ public class LessonMap {
     метод реализации статистики.
      */
     private static void popWord() {
-        Object O = new Object();//что хотим найти
+        ArrayList<Integer> massWordsCount = new ArrayList<Integer>();
         for (Map.Entry<String, Integer> pair : entrySet) {
-            sortWord.put(pair.getValue(), pair.getKey());
+            if (!massWordsCount.contains(pair.getValue()))
+                massWordsCount.add(pair.getValue());
         }
-        System.err.println("Kолличество использованных слов " + popularWords.size() + " . Популярное слово -: " + sortWord.get(sortWord.lastKey()).toUpperCase() + "; не популярное -: " + sortWord.get(sortWord.firstKey()).toUpperCase());
+        Collections.sort(massWordsCount);
+        System.err.println("Kолличество использованных слов " + popularWords.size() + ". слова по возрастанию популярности -: ");
+        int tempSize;
+        if (massWordsCount.size() < 5) {
+            tempSize = massWordsCount.size()-1;
+        }else{
+            tempSize=5;
+        }
+        for (int i = 0; i <= tempSize; i++) {
+            for (Map.Entry<String, Integer> pair : entrySet) {
+                if (pair.getValue() == massWordsCount.get(i)) {
+                    System.out.println(pair.getKey() + "-кол-во запросов " + massWordsCount.get(i));
+                }
+            }
+        }
+        Collections.reverse(massWordsCount);
+        System.err.println("Kолличество использованных слов " + popularWords.size() + ". слова по убыванию популярности -: ");
+        for (int i = 0; i <= tempSize; i++) {
+            for (Map.Entry<String, Integer> pair : entrySet) {
+                if (pair.getValue() == massWordsCount.get(i)) {
+                    System.out.println(pair.getKey() + "-кол-во запросов " + massWordsCount.get(i));
+                  }
+            }
+        }
     }
 
     /*
@@ -130,7 +155,7 @@ public class LessonMap {
                     int index = 0;
                     while (it.hasNext()) {
                         if (index == del - 1) {
-                            //           it.next();
+                            it.next();
                             it.remove();
                             remove = true;
                             System.out.println(userWord + "-" + translator.get(userWord.toLowerCase()));
@@ -161,7 +186,7 @@ public class LessonMap {
     /*
     функция перевода
      */
-    private static TreeMap<String, Integer> rusToEngl() throws IOException {
+    private static Map<String, Integer> rusToEngl() throws IOException {
         int count = 1;
         System.out.println("Введи слово(англ) :");
         String userWord = br.readLine();
@@ -192,65 +217,47 @@ public class LessonMap {
     /*
     создание своего словаря
      */
-    private static void init2() throws IOException {
-        System.out.println("Создадим словарь");
-        do {
-            System.out.println("Введи слово :");
-            String word = br.readLine();
-            ArrayList<String> wordNew = new ArrayList<>();
-            System.out.println("Введи перевод.Если слов несколько, разделяй их пробелами:");
-            String translat = br.readLine();
-            String[] wordMass = translat.split(" ");
-            wordNew.addAll(Arrays.asList(wordMass));
-            translator.put(word, wordNew);
-            System.out.println("0-продолжить заполнять/любая клавиша- выход");
-        } while (br.readLine().equals("0"));
-
-    }
-
-//    private static void init() {
-//        System.out.println("В коллекции представлены слова: hello, bye, ok, car, house, fly, phone.");
-//        ArrayList<String> hello = new ArrayList<>();
-//        hello.addAll(Arrays.asList("привет", "добрый день", "здравстуйте"));
-//        translator.put("hello", hello);
-//        ArrayList<String> bye = new ArrayList<>();
-//        bye.addAll(Arrays.asList("пока", "до связи", "увидимся"));
-//        translator.put("bye", bye);
-//        ArrayList<String> ok = new ArrayList<>();
-//        ok.addAll(Arrays.asList("ok", "отлично", "хорошо"));
-//        translator.put("ok", ok);
-//        ArrayList<String> car = new ArrayList<>();
-//        car.addAll(Arrays.asList("машина", "авто", "автомобиль"));
-//        translator.put("car", car);
-//        ArrayList<String> house = new ArrayList<>();
-//        house.addAll(Arrays.asList("дом", "жильё", "квартира"));
-//        translator.put("house", house);
-//        ArrayList<String> fly = new ArrayList<>();
-//        fly.addAll(Arrays.asList("летать", "парить"));
-//        translator.put("fly", fly);
-//        ArrayList<String> phone = new ArrayList<>();
-//        phone.addAll(Arrays.asList("телефон", "мобила", "смартфон"));
-//        translator.put("phone", phone);
+//    private static void init2() throws IOException {
+//        System.out.println("Создадим словарь");
+//        do {
+//            System.out.println("Введи слово :");
+//            String word = br.readLine();
+//            ArrayList<String> wordNew = new ArrayList<>();
+//            System.out.println("Введи перевод.Если слов несколько, разделяй их пробелами:");
+//            String translat = br.readLine();
+//            String[] wordMass = translat.split(" ");
+//            wordNew.addAll(Arrays.asList(wordMass));
+//            translator.put(word, wordNew);
+//            System.out.println("0-продолжить заполнять/любая клавиша- выход");
+//        } while (br.readLine().equals("0"));
+//
 //    }
-}
-//        HashMap<String, Integer> testMap = new HashMap();
-//        testMap.put("user1", 111);
-//        testMap.put("user2", 222);
-//        testMap.put("user1", 333);
-//        System.out.println(testMap.size());
-//        testMap.get("use1");//333
-//        String name = "Petr";
-//        if (!testMap.containsKey(name)) {
-//            testMap.put(name, 444);
-//        }
-//        Set<String> blockedSet = new HashSet<>();
-//        Set<Map.Entry<String, Integer>> entrySet = testMap.entrySet();
-//        for (Map.Entry<String, Integer> entry : testMap.entrySet())
-//            if (blockedSet.contains((entry.getKey()))) {
-//                testMap.remove(entry);
-//            }
-//        testMap.keySet();
 
-//       testMap.entrySet();
+    private static void init() {
+        System.out.println("В коллекции представлены слова: hello, bye, ok, car, house, fly, phone.");
+        ArrayList<String> hello = new ArrayList<>();
+        hello.addAll(Arrays.asList("привет", "добрый день", "здравстуйте"));
+        translator.put("hello", hello);
+        ArrayList<String> bye = new ArrayList<>();
+        bye.addAll(Arrays.asList("пока", "до связи", "увидимся"));
+        translator.put("bye", bye);
+        ArrayList<String> ok = new ArrayList<>();
+        ok.addAll(Arrays.asList("ok", "отлично", "хорошо"));
+        translator.put("ok", ok);
+        ArrayList<String> car = new ArrayList<>();
+        car.addAll(Arrays.asList("машина", "авто", "автомобиль"));
+        translator.put("car", car);
+        ArrayList<String> house = new ArrayList<>();
+        house.addAll(Arrays.asList("дом", "жильё", "квартира"));
+        translator.put("house", house);
+        ArrayList<String> fly = new ArrayList<>();
+        fly.addAll(Arrays.asList("летать", "парить"));
+        translator.put("fly", fly);
+        ArrayList<String> phone = new ArrayList<>();
+        phone.addAll(Arrays.asList("телефон", "мобила", "смартфон"));
+        translator.put("phone", phone);
+    }
+}
+
 
 
